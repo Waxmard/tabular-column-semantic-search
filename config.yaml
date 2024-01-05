@@ -1,8 +1,9 @@
-email: YOUR_EMAIL_ADDRESS
-app_username: username
+---
+email: maxward4@gmail.com
+app_username: mward
 stack_name: ColumnSemanticSearch
 resources_name_prefix: column-search-uid
-certificate_arn: # Auto populated during deployment
+certificate_arn:  # Auto populated during deployment
 parquet_s3_path: data/parquet
 processed_csv_s3_path: data/csv/processed
 embeddings_s3_path: embeddings
@@ -12,8 +13,8 @@ sm_processing_instance_type: ml.g4dn.xlarge
 opensearch_instance_type: r6g.large.search
 opensearch_volume_size: 30
 models:
-- all-MiniLM-L6-v2
-- all-distilroberta-v1
-- average_word_embeddings_glove.6B.300d
+  - all-MiniLM-L6-v2
+  - all-distilroberta-v1
+  - average_word_embeddings_glove.6B.300d
 max_batches: 10
 local_cpu_architecture: X86_64
