@@ -1,7 +1,7 @@
 email: maxward4@gmail.com
 app_username: mward
 stack_name: ColumnSemanticSearch
-resources_name_prefix: column-search-uid
+resources_name_prefix: column-search-uid-mward
 certificate_arn: arn:aws:acm:us-east-1:938220026554:certificate/b3e1a1e9-a1fc-45f1-8360-02ea65d93fd6
 parquet_s3_path: data/parquet
 processed_csv_s3_path: data/csv/processed
