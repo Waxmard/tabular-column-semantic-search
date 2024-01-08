@@ -1,20 +1,16 @@
-from aws_cdk import (
-    Duration,
-    RemovalPolicy,  
-    Size, 
-    Stack, 
-    aws_certificatemanager as acm,
-    aws_cognito as cognito,
-    aws_ec2 as ec2,
-    aws_ecs as ecs,
-    aws_ecs_patterns as ecs_patterns,
-    aws_elasticloadbalancingv2 as elb,
-    aws_elasticloadbalancingv2_actions as elb_actions,
-    aws_lambda as lambda_,
-    aws_opensearchservice as opensearch,
-)
-from constructs import Construct
 import yaml
+from aws_cdk import Duration, RemovalPolicy, Size, Stack
+from aws_cdk import aws_certificatemanager as acm
+from aws_cdk import aws_cognito as cognito
+from aws_cdk import aws_ec2 as ec2
+from aws_cdk import aws_ecs as ecs
+from aws_cdk import aws_ecs_patterns as ecs_patterns
+from aws_cdk import aws_elasticloadbalancingv2 as elb
+from aws_cdk import aws_elasticloadbalancingv2_actions as elb_actions
+from aws_cdk import aws_lambda as lambda_
+from aws_cdk import aws_opensearchservice as opensearch
+from constructs import Construct
+
 from tools import utils
 
 #####################################
@@ -33,7 +29,7 @@ if not certificate_arn:
     key_file = "tools/private.key"
     cert_file = "tools/selfsigned.crt"
     utils.cert_gen(
-        key_file=key_file, 
+        key_file=key_file,
         cert_file=cert_file
     )
     certificate_arn = utils.cert_acm_upload(
@@ -49,8 +45,8 @@ if not certificate_arn:
 # Define CDK stack
 class CdkSemanticSearchFrontEndStack(Stack):
     def __init__(self, scope: Construct, construct_id: str,
-                 lambda_query_opensearch: lambda_.DockerImageFunction, 
-                 opensearch_domain: opensearch.Domain, 
+                 lambda_query_opensearch: lambda_.DockerImageFunction,
+                 opensearch_domain: opensearch.Domain,
                  **kwargs
                  ) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -67,8 +63,8 @@ class CdkSemanticSearchFrontEndStack(Stack):
             timeout=Duration.minutes(1),
         )
 
-        # Set provisioned concurrency
-        lambda_embed_payload.add_alias("Live", provisioned_concurrent_executions=1)
+        # Set provisioned concurrency -- commented out in order to leave 10 Unreserved Concurrency for Lambda
+        # lambda_embed_payload.add_alias("Live", provisioned_concurrent_executions=1)
 
         # Set cdk removal policy for function
         lambda_embed_payload.apply_removal_policy(RemovalPolicy.DESTROY)
@@ -191,7 +187,7 @@ class CdkSemanticSearchFrontEndStack(Stack):
         )
 
         # User
-        user = cognito.CfnUserPoolUser(self, "User Pool User",
+        cognito.CfnUserPoolUser(self, "User Pool User",
             user_pool_id=user_pool.user_pool_id,
             desired_delivery_mediums=["EMAIL"],
             force_alias_creation=False,
@@ -200,7 +196,7 @@ class CdkSemanticSearchFrontEndStack(Stack):
                     name="email",
                     value=email
                 )
-            ],   
+            ],
             username=app_username
         )
 

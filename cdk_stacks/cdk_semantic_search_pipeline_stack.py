@@ -1,24 +1,18 @@
-from aws_cdk import (
-    Aws,
-    CfnOutput, 
-    Duration,
-    RemovalPolicy,  
-    Stack, 
-    aws_ec2 as ec2,
-    aws_ecr_assets as ecr_assets,
-    aws_glue as glue,
-    aws_iam as iam,
-    aws_lambda as lambda_,
-    aws_lambda_event_sources as event_sources,
-    aws_logs as logs,
-    aws_opensearchservice as opensearch,
-    aws_s3 as s3,
-    aws_s3_deployment as s3_deploy,
-    aws_stepfunctions as sfn,
-    aws_stepfunctions_tasks as sfn_tasks
-)
-from constructs import Construct
 import yaml
+from aws_cdk import Aws, CfnOutput, Duration, RemovalPolicy, Stack
+from aws_cdk import aws_ec2 as ec2
+from aws_cdk import aws_ecr_assets as ecr_assets
+from aws_cdk import aws_glue as glue
+from aws_cdk import aws_iam as iam
+from aws_cdk import aws_lambda as lambda_
+from aws_cdk import aws_lambda_event_sources as event_sources
+from aws_cdk import aws_logs as logs
+from aws_cdk import aws_opensearchservice as opensearch
+from aws_cdk import aws_s3 as s3
+from aws_cdk import aws_s3_deployment as s3_deploy
+from aws_cdk import aws_stepfunctions as sfn
+from aws_cdk import aws_stepfunctions_tasks as sfn_tasks
+from constructs import Construct
 
 #####################################
 # Get configs
@@ -423,8 +417,8 @@ class CdkSemanticSearchPipelineStack(Stack):
             timeout=Duration.minutes(1),
         )
 
-        # Set provisioned concurrency
-        self.lambda_query_opensearch.add_alias("Live", provisioned_concurrent_executions=1)
+        # Set provisioned concurrency -- commented out in order to leave 10 Unreserved Concurrency for Lambda
+        # self.lambda_query_opensearch.add_alias("Live", provisioned_concurrent_executions=1)
         # Set cdk removal policy for function
         self.lambda_query_opensearch.apply_removal_policy(RemovalPolicy.DESTROY)
         # Add permissions for function

@@ -12,8 +12,8 @@ sm_processing_instance_type: ml.g4dn.xlarge
 opensearch_instance_type: r6g.large.search
 opensearch_volume_size: 30
 models:
-- all-MiniLM-L6-v2
-- all-distilroberta-v1
-- average_word_embeddings_glove.6B.300d
+  - all-MiniLM-L6-v2
+  - all-distilroberta-v1
+  - average_word_embeddings_glove.6B.300d
 max_batches: 10
 local_cpu_architecture: X86_64
